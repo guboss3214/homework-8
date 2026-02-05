@@ -8,3 +8,7 @@ export const loginRequest = (data: IUserData) => {
 export const registerRequest  = (data: IUserData) => {
     return axiosInstance.post('/users/register', data)
 }
+
+export const getMyProfileInfoRequest = () => {
+    return axiosInstance.get('/users/my-profile')
+}

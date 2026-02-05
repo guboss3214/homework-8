@@ -5,10 +5,10 @@ import { Box, Button, TextField, Typography, IconButton, InputAdornment, Circula
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../store/slices/userSlice';
 import type { AppDispatch } from '../store/store';
 import type { IUserData } from '../interfaces/userData';
 import type { FormProps } from '../interfaces/FormProps';
+import { getMyProfileInfo, loginUser } from '../store/slices/userSlice';
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string().required('Username is required').min(3, 'Too short'),
@@ -27,6 +27,7 @@ const LoginForm: React.FC<FormProps> = ({ redirectTo = '/home' }) => {
     setError('');
     try {
       await dispatch(loginUser(values)).unwrap();
+      await dispatch(getMyProfileInfo()).unwrap();
       navigate(redirectTo);
     } catch (err: any) {
       setError(err.message || 'Login failed');

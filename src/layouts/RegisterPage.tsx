@@ -5,7 +5,7 @@ import RegisterForm from '../components/RegisterForm';
 const RegisterPage: React.FC = () => {
   return (
     <Box>
-      <RegisterForm redirectTo="/home" />
+      <RegisterForm redirectTo="/" />
     </Box>
   );
 };

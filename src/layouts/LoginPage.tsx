@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 const LoginPage: React.FC = () => {
   return (
     <Box>
-      <LoginForm redirectTo="/home" />
+      <LoginForm redirectTo="/" />
     </Box>
   );
 };

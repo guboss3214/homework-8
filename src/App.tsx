@@ -2,20 +2,31 @@ import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./layouts/HomePage";
 import LoginPage from "./layouts/LoginPage";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
 import StipePage from "./layouts/StipePage";
 import RegisterPage from "./layouts/RegisterPage";
 import "./index.css";
+import Header from "./components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "./store/store";
+import { useEffect } from "react";
+import { getMyProfileInfo } from "./store/slices/userSlice";
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { token, profile } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (token && !profile) {
+      dispatch(getMyProfileInfo());
+    }
+  }, [token, profile, dispatch]);
   return (
-    <Provider store={store}>
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<ProtectedRoute>
-                <StipePage />
-              </ProtectedRoute>} />
+            <StipePage />
+          </ProtectedRoute>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route
@@ -29,7 +40,6 @@ function App() {
           <Route path="*" element={<div>404: Page not found</div>} />
         </Routes>
       </Router>
-    </Provider>
   );
 }
 
