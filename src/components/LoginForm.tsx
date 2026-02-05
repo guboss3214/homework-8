@@ -29,8 +29,10 @@ const LoginForm: React.FC<FormProps> = ({ redirectTo = '/home' }) => {
       await dispatch(loginUser(values)).unwrap();
       await dispatch(getMyProfileInfo()).unwrap();
       navigate(redirectTo);
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Login failed';
+      setError(errorMessage);
+      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }

@@ -19,6 +19,7 @@ interface IPost {
   commentCount: number;
   createdAt: string;
   user: {
+    id: number;
     username: string;
   };
 }
@@ -38,13 +39,14 @@ const HomePage = () => {
       setLoading(true);
       const res = await dispatch(myPosts()).unwrap();
       setMyPostsData(res.data);
-    } catch (err: any) {
-      setError(err.message || 'Failed to fetch posts');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch posts';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchMyPosts();
   }, [postsUpdatedTrigger]);

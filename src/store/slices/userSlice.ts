@@ -4,10 +4,15 @@ import { getMyProfileInfoRequest, loginRequest, registerRequest } from "../../ap
 import { allPostsRequest, createPostRequest, deletePostRequest, myPostsRequest } from "../../api/exhibitActions";
 import { addCommentRequest, deleteCommentRequest, getCommentRequest } from "../../api/commentActions";
 
+type Profile = {
+  id: number;
+  username: string;
+}
+
 interface UserState {
   token: string | null;
   isAuthenticated: boolean;
-  profile: any | null;
+  profile: Profile | null;
   postsUpdatedTrigger: number;
 }
 
@@ -91,8 +96,9 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
         localStorage.setItem("token", action.payload.access_token);
       })
-      .addCase(getMyProfileInfo.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(getMyProfileInfo.fulfilled, (state, action: PayloadAction<Profile>) => {
         state.profile = action.payload;
+        console.log("Profile info fetched:", action.payload);
       })
       .addCase(createPost.fulfilled, (state) => {
         state.postsUpdatedTrigger = Date.now(); 

@@ -5,6 +5,18 @@ import { getAllPosts } from "../store/slices/userSlice";
 import type { AppDispatch } from "../store/store";
 import Post from "../components/Post";
 
+interface IPost {
+  id: number;
+  imageUrl: string;
+  description: string;
+  commentCount: number;
+  createdAt: string;
+  user: {
+    id: number;
+    username: string;
+  };
+}
+
 const StripePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
@@ -29,7 +41,7 @@ const StripePage = () => {
   }, []);
 
   const count = Math.ceil(posts.length / postsPerPage);
-  const currentPosts = posts.slice((page - 1) * postsPerPage, page * postsPerPage);
+  const currentPosts: IPost[] = posts.slice((page - 1) * postsPerPage, page * postsPerPage);
 
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>

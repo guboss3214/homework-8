@@ -29,8 +29,10 @@ const RegisterForm: React.FC<FormProps> = ({ redirectTo = '/home' }) => {
     try {
       await dispatch(registerUser(values)).unwrap();
       navigate(redirectTo);
-    } catch (err: any) {
-      setError(err.message || 'Registration failed');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Registration failed';
+      setError(errorMessage);
+      console.error("Registration error:", err);
     } finally {
       setLoading(false);
     }

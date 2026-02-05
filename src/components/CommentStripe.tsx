@@ -1,7 +1,23 @@
 import { List, CircularProgress, Box, Typography } from '@mui/material';
 import Comment from './Comment';
 
-const CommentStripe = ({ comments, loading, currentUserId, onDelete }: any) => {
+interface IComment {
+  id: number;
+  text: string;
+  user: {
+    id: number;
+    username: string;
+  };
+}
+
+interface CommentStripeProps {
+  comments: IComment[];
+  loading: boolean;
+  currentUserId?: number; 
+  onDelete: (id: number) => void;
+}
+
+const CommentStripe = ({ comments, loading, currentUserId, onDelete }: CommentStripeProps) => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
