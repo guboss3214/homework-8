@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { 
   AppBar, Toolbar, Button, Box, Dialog, DialogTitle, DialogContent, 
   DialogActions, TextField, IconButton, Link, FormHelperText 
 } from '@mui/material';
-import { Formik, Form } from 'formik'; // ДОДАНО ІМПОРТ
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../store/store';
 import { createPost, logout } from '../store/slices/userSlice';
 
-// Виносимо схему за межі компонента
 const PostSchema = Yup.object().shape({
   description: Yup.string()
     .min(5, 'Description is too short')
@@ -28,7 +27,6 @@ const Header = () => {
   const [preview, setPreview] = useState<string>('');
   
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state: RootState) => state.user);
 
   const handleOpen = () => setOpen(true);
@@ -39,7 +37,6 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
   };
 
   return (
@@ -117,7 +114,6 @@ const Header = () => {
               try {
                 await dispatch(createPost(formData)).unwrap();
                 handleClose();
-                // Тут можна додати navigate('/') або оновлення списку
               } catch (error) {
                 console.error("Failed to create post:", error);
               } finally {
@@ -129,7 +125,6 @@ const Header = () => {
           {({ values, errors, touched, setFieldValue, isSubmitting, handleChange, handleBlur }) => (
             <Form>
               <DialogContent dividers>
-                {/* Фото */}
                 <Box 
                   sx={{ 
                     textAlign: 'center', p: 2, border: '1px dashed', 
@@ -178,7 +173,6 @@ const Header = () => {
                   )}
                 </Box>
 
-                {/* Опис */}
                 <TextField
                   name="description"
                   label="What's on your mind?"

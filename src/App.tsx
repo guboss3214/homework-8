@@ -1,5 +1,4 @@
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./layouts/HomePage";
 import LoginPage from "./layouts/LoginPage";
 import StipePage from "./layouts/StipePage";
@@ -24,17 +23,15 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<ProtectedRoute>
+          <Route path="/" element={
             <StipePage />
-          </ProtectedRoute>} />
+          } />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route
             path="/home"
             element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
+              <HomePage />
             }
           />
           <Route path="*" element={<div>404: Page not found</div>} />
