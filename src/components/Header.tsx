@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { 
   AppBar, Toolbar, Button, Box, Dialog, DialogTitle, DialogContent, 
   DialogActions, TextField, IconButton, Link, FormHelperText 
@@ -25,6 +25,7 @@ const PostSchema = Yup.object().shape({
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [preview, setPreview] = useState<string>('');
+  const location = useLocation()
   
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.user);
@@ -53,14 +54,14 @@ const Header = () => {
                 <Link
                   component={RouterLink}
                   to="/home"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#5f6368', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem', '&:hover': { color: '#1976d2' } }}
+                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: `${location.pathname === '/home' ? '#1976d2' : '#5f6368'}`, textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem', '&:hover': { color: '#1976d2' } }}
                 >
                   <NewspaperIcon fontSize="small" /> My posts
                 </Link>
                 <Link
                   component={RouterLink}
                   to="/"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#1976d2', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem', '&:hover': { color: '#5f6368' } }}
+                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: `${location.pathname === '/' ? '#1976d2' : '#5f6368'}`, textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem', '&:hover': { color: '#5f6368' } }}
                 >
                   <NewspaperOutlined fontSize="small" /> All posts
                 </Link>

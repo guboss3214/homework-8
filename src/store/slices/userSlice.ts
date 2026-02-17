@@ -98,7 +98,6 @@ const userSlice = createSlice({
       })
       .addCase(getMyProfileInfo.fulfilled, (state, action: PayloadAction<Profile>) => {
         state.profile = action.payload;
-        console.log("Profile info fetched:", action.payload);
       })
       .addCase(createPost.fulfilled, (state) => {
         state.postsUpdatedTrigger = Date.now(); 
